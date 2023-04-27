@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct ItemModel: Identifiable {
-    let id = UUID()
+struct ItemModel: Identifiable, Codable {
+    let id: UUID
     let dueDate: Date
     let description: String
 }
 
 extension ItemModel {
     static let itemModels = [
-        ItemModel(dueDate: Date(), description: "Buy groceries"),
-        ItemModel(dueDate: Date().addingTimeInterval(3600), description: "Pay bills"),
-        ItemModel(dueDate: Date().addingTimeInterval(86400), description: "Go for a run")
+        ItemModel(id: UUID(), dueDate: Date(), description: "Buy groceries"),
+        ItemModel(id: UUID(), dueDate: Date().addingTimeInterval(3600), description: "Pay bills"),
+        ItemModel(id: UUID(), dueDate: Date().addingTimeInterval(86400), description: "Go for a run")
     ]
 }
