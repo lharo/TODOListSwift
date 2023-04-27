@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var itemsArray: [ItemModel] = ItemModel.itemModels
+    @State private var itemsArray = [ItemModel]()
+    private var dataPersistence = DataPersistence()
+//    @State private var itemsArray: [ItemModel] = ItemModel.itemModels
     @State private var showAddNewItemView = false
 
     var body: some View {
@@ -24,22 +26,42 @@ struct ContentView: View {
                                 .font(.headline)
                             Text(item.dueDate.formatted())
                                 .font(.subheadline)
-                        }.foregroundColor(.black)
+                        }.foregroundColor(.primary)
                     })
 
                 }
                 .navigationBarTitle("TODO List")
-                .navigationBarItems(trailing: NavigationLink(destination: ItemView(handleAdd: addItem)) {
+                .navigationBarItems(trailing:
+                    NavigationLink(destination: ItemView(handleAdd: addItem)) {
                     Image(systemName: "plus")
                 })
             }
+        }.onAppear{
+            do {
+                self.itemsArray = try dataPersistence.loadItems()
+            } catch{
+                
+            }
+        }.onDisappear {
+            do {
+                try dataPersistence.saveItems(itemsArray)
+            } catch {
+                
+            }
         }
+
     }
     
     func addItem(item: ItemModel) -> Void {
+        
+//        do {
+//            try dataPersistence.appendItem(item)
+//        } catch {
+//            // Handle error
+//        }
         itemsArray.append(item)
     }
-
+        
 }
 
 struct ContentView_Previews: PreviewProvider {
