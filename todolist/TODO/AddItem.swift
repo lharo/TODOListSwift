@@ -25,13 +25,9 @@ struct ItemView: View {
                             showAlert = true
                         } else {
                             
-                            let item = ItemModel(dueDate: selectedDate, description: newItemText)
+                            let item = ItemModel(id: UUID(), dueDate: selectedDate, description: newItemText)
                             handleAdd(item)
                             
-                            //                        Inside the Button action closure, we're calling self.presentation.wrappedValue.dismiss() to dismiss the current view. The wrappedValue property of presentationMode provides a way to access the underlying value of the environment variable, which in this case is an instance of the Binding type.
-                            //
-                            //                        The dismiss() method is a convenient way to pop the current view from the navigation stack and return to the previous view. This is often used in a modal presentation or when pushing views onto a navigation stack.
-                            //
                             self.presentation.wrappedValue.dismiss()
                         }
                     }
