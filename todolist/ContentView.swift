@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var itemsArray: [ItemModel] = ItemModel.itemModels
+    @State private var itemsArray = [ItemModel]()
+     private var dataPersistence = DataPersistence()
     @State private var showAddNewItemView = false
+    let data = DataPersistence()
 
     var body: some View {
         VStack {
@@ -32,6 +34,18 @@ struct ContentView: View {
                 .navigationBarItems(trailing: NavigationLink(destination: ItemView(handleAdd: addItem)) {
                     Image(systemName: "plus")
                 })
+            }
+        }.onAppear {
+            do {
+                itemsArray = try data.loadItems();
+            } catch {
+                
+            }
+        }.onDisappear {
+            do {
+                try data.saveItems(items: itemsArray)
+            }catch {
+                
             }
         }
     }

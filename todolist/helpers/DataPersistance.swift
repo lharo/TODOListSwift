@@ -24,7 +24,7 @@ class DataPersistence {
         try encodedItems.write(to: itemsURL)
     }
     
-    func loadItems() -> throws [ItemModel] {
+    func loadItems() throws -> [ItemModel] {
         guard fileManager.fileExists(atPath: itemsURL.path) else {
             return []
         }
